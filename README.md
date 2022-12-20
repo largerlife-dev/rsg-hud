@@ -7,6 +7,7 @@
 
 # Dependancies
 - qr-core
+- rsg-telegram
 
 # Installation
 - ensure that the dependancies are added and started
