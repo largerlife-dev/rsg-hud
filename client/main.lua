@@ -8,6 +8,7 @@ local cashAmount = 0
 local bankAmount = 0
 local isLoggedIn = false
 local youhavemail = false
+local incinematic = false
 
 -- functions
 local function GetShakeIntensity(stresslevel)
@@ -59,7 +60,7 @@ end)
 CreateThread(function()
     while true do
         Wait(500)
-        if LocalPlayer.state['isLoggedIn'] then
+        if LocalPlayer.state['isLoggedIn'] and incinematic == false then
             local show = true
             local player = PlayerPedId()
             local playerid = PlayerId()
@@ -95,7 +96,7 @@ end)
 CreateThread(function()
     while true do
         Wait(1)
-          if IsPedOnMount(PlayerPedId()) or IsPedOnVehicle(PlayerPedId()) then
+        if IsPedOnMount(PlayerPedId()) or IsPedOnVehicle(PlayerPedId()) then
             if Config.MounttMinimap then
                 if Config.MountCompass then
                     SetMinimapType(3)
@@ -105,10 +106,10 @@ CreateThread(function()
             else
                 SetMinimapType(0)
             end
-          else
+        else
             if not Config.OnFootMinimap then
-              SetMinimapType(0)
-              Wait(2000)
+                SetMinimapType(0)
+                Wait(2000)
             else
                 if Config.OnFootCompass then
                     SetMinimapType(3)
@@ -116,11 +117,11 @@ CreateThread(function()
                     SetMinimapType(1)
                 end
             end
-          end
-     end
-  end)
--- Money HUD
+        end
+    end
+end)
 
+-- Money HUD
 RegisterNetEvent('hud:client:ShowAccounts', function(type, amount)
     if type == 'cash' then
         SendNUIMessage({
@@ -191,7 +192,6 @@ CreateThread(function() -- Shooting
 end)
 
 -- Stress Screen Effects
-
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
@@ -226,14 +226,8 @@ CreateThread(function()
     end
 end)
 
--- check player telegrams
-RegisterNetEvent('hud:client:CheckTelegrams', function(data)
-    QRCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
-        print()
-    end)
-end)
-
-CreateThread(function() -- check telegrams
+-- check telegrams
+CreateThread(function()
     while true do
         if LocalPlayer.state['isLoggedIn'] then
             QRCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
@@ -245,5 +239,20 @@ CreateThread(function() -- check telegrams
             end)
         end
         Wait(Config.TelegramCheck)
+    end
+end)
+
+-- check cinematic and hide hud
+CreateThread(function()
+    while true do
+        if LocalPlayer.state['isLoggedIn'] then
+            local cinematic = Citizen.InvokeNative(0xBF7C780731AADBF8, Citizen.ResultAsInteger())
+            if cinematic == 1 then
+                incinematic = true
+            else
+                incinematic = false
+            end
+        end
+        Wait(500)
     end
 end)
