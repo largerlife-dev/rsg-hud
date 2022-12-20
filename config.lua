@@ -3,6 +3,9 @@ Config.StressChance = 0.1 -- Default: 10% -- Percentage Stress Chance When Shoot
 Config.MinimumStress = 50 -- Minimum Stress Level For Screen Shaking
 Config.MinimumSpeed = 100 -- Going Over This Speed Will Cause Stress
 
+-- telegrame check settings
+Config.TelegramCheck = 5000 -- amount of milliseconds to check your telegrams
+
 --Current setup: no minimap when onfoot
 Config.OnFootMinimap = false -- set to true/false to disable/enable minimap when on foot
 Config.OnFootCompass = false -- true = have the minimap set to a compass instead of off or normal minimap

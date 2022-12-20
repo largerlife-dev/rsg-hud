@@ -17,6 +17,7 @@
 
 # Added features
 - food and drink icon changes colour to red when low
+- telegram visual notification
 
 # Credits
 - https://github.com/qbcore-redm-framework/qbr-hud

@@ -7,6 +7,7 @@ local thirst = 100
 local cashAmount = 0
 local bankAmount = 0
 local isLoggedIn = false
+local youhavemail = false
 
 -- functions
 local function GetShakeIntensity(stresslevel)
@@ -78,8 +79,9 @@ CreateThread(function()
                 thirst = thirst,
                 hunger = hunger,
                 stress = stress,
-				talking = talking,
-				voice = voice,
+                talking = talking,
+                voice = voice,
+                youhavemail = youhavemail,
             })
         else
             SendNUIMessage({
@@ -221,5 +223,27 @@ CreateThread(function()
             SetFlash(0, 0, 500, 2500, 500)
         end
         Wait(sleep)
+    end
+end)
+
+-- check player telegrams
+RegisterNetEvent('hud:client:CheckTelegrams', function(data)
+    QRCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
+        print()
+    end)
+end)
+
+CreateThread(function() -- check telegrams
+    while true do
+        if LocalPlayer.state['isLoggedIn'] then
+            QRCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
+                if amount > 0 then
+                    youhavemail = true            
+                else
+                    youhavemail = false
+                end
+            end)
+        end
+        Wait(Config.TelegramCheck)
     end
 end)

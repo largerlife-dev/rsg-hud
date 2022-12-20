@@ -4,13 +4,13 @@ const moneyHud = Vue.createApp({
     data() {
         return {
             cash: 0,
-			bloodmoney: 0,
+            bloodmoney: 0,
             bank: 0,
             amount: 0,
             plus: false,
             minus: false,
             showCash: false,
-			showBloodmoney: false,
+            showBloodmoney: false,
             showBank: false,
             showUpdate: false
         }
@@ -47,17 +47,17 @@ const moneyHud = Vue.createApp({
         },
         showConstant(data) {
             this.showCash = true;
-			this.showBloodmoney = true;
+            this.showBloodmoney = true;
             this.showBank = true;
             this.cash = data.cash;
-			this.bloodmoney = data.bloodmoney;
+            this.bloodmoney = data.bloodmoney;
             this.bank = data.bank;
         },
         update(data) {
             this.showUpdate = true;
             this.amount = data.amount;
             this.bank = data.bank;
-			this.bloodmoney = data.bloodmoney;
+            this.bloodmoney = data.bloodmoney;
             this.cash = data.cash;
             if (data.type === 'cash') {
                 if (data.minus) {
@@ -105,12 +105,12 @@ const moneyHud = Vue.createApp({
                 this.cash = data.cash;
                 setTimeout(() => this.showCash = false, 3500);
             }
-			else if (data.type === 'bloodmoney' && !this.showBloodmoney) {
+            else if (data.type === 'bloodmoney' && !this.showBloodmoney) {
                 this.showBloodmoney = true;
                 this.bloodmoney = data.bloodmoney;
                 setTimeout(() => this.showBloodmoney = false, 3500);
             }
-			else if (data.type === 'bank' && !this.showBank) {
+            else if (data.type === 'bank' && !this.showBank) {
                 this.showBank = true;
                 this.bank = data.bank;
                 setTimeout(() => this.showBank = false, 3500);
@@ -130,15 +130,17 @@ const playerHud = {
             thirst: 0,
             stress: 0,
             voice: 0,
+            youhavemail: false,
             show: false,
-			talking: false,
+            talking: false,
             showVoice: true,
             showHealth: true,
             showArmor: true,
             showHunger: true,
             showThirst: true,
             showStress: true,
-			talkingColor: "#FFFFFF",
+            showYouHaveMail: true,
+            talkingColor: "#FFFFFF",
         }
     },
     destroyed() {
@@ -151,8 +153,6 @@ const playerHud = {
             }
         });
     },
-
-
     methods: {
         hudTick(data) {
             this.show = data.show;
@@ -162,13 +162,14 @@ const playerHud = {
             this.thirst = data.thirst;
             this.stress = data.stress;
             this.voice = data.voice;
-			this.talking = data.talking;
+            this.youhavemail = data.youhavemail;
+            this.talking = data.talking;
             if (data.health >= 100) {
                 this.showHealth = false;
             } else {
                 this.showHealth = true;
             }
-			if (data.health <= 30 ) {
+            if (data.health <= 30 ) {
               this.showHealthColor = "#FF0000";
             } else {
                 this.showHealthColor = "#FFF";
@@ -203,11 +204,16 @@ const playerHud = {
             } else {
                 this.showStress = true;
             }
-			if (data.talking) {
-				this.talkingColor = "#FF0000";
-			} else {
-				this.talkingColor = "#FFFFFF";
-			}
+            if (data.talking) {
+                this.talkingColor = "#FF0000";
+            } else {
+                this.talkingColor = "#FFFFFF";
+            }
+            if (data.youhavemail) {
+                this.showYouHaveMailColor = "#FFD700";
+            } else {
+                this.showYouHaveMailColor = "#FFFFFF";
+            }
         }
     }
 }

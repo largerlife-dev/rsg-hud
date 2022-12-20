@@ -4,19 +4,19 @@ local ResetStress = false
 QRCore.Commands.Add('cash', 'Check Cash Balance', {}, false, function(source, args)
     local Player = QRCore.Functions.GetPlayer(source)
     local cashamount = Player.PlayerData.money.cash
-	TriggerClientEvent('hud:client:ShowAccounts', source, 'cash', cashamount)
+    TriggerClientEvent('hud:client:ShowAccounts', source, 'cash', cashamount)
 end)
 
 QRCore.Commands.Add('bank', 'Check Bank Balance', {}, false, function(source, args)
     local Player = QRCore.Functions.GetPlayer(source)
     local bankamount = Player.PlayerData.money.bank
-	TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
+    TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
 end)
 
 QRCore.Commands.Add('bloodmoney', 'Check Bloodmoney Balance', {}, false, function(source, args)
     local Player = QRCore.Functions.GetPlayer(source)
     local bloodmoneyamount = Player.PlayerData.money.bloodmoney
-	TriggerClientEvent('hud:client:ShowAccounts', source, 'bloodmoney', bloodmoneyamount)
+    TriggerClientEvent('hud:client:ShowAccounts', source, 'bloodmoney', bloodmoneyamount)
 end)
 
 RegisterNetEvent('hud:server:GainStress', function(amount)
@@ -39,7 +39,7 @@ RegisterNetEvent('hud:server:GainStress', function(amount)
         Player.Functions.SetMetaData('stress', newStress)
         TriggerClientEvent('hud:client:UpdateStress', src, newStress)
         TriggerClientEvent('QRCore:Notify', src, Lang:t("info.getstress"), 'primary')
-	end
+    end
 end)
 
 RegisterNetEvent('hud:server:GainThirst', function(amount)
@@ -60,7 +60,7 @@ RegisterNetEvent('hud:server:GainThirst', function(amount)
         Player.Functions.SetMetaData('thirst', newThirst)
         TriggerClientEvent('hud:client:UpdateThirst', src, newThirst)
         TriggerClientEvent('QRCore:Notify', src, Lang:t("info.thirsty"), 'primary')
-	end
+    end
 end)
 
 RegisterNetEvent('hud:server:RelieveStress', function(amount)
@@ -83,5 +83,17 @@ RegisterNetEvent('hud:server:RelieveStress', function(amount)
         Player.Functions.SetMetaData('stress', newStress)
         TriggerClientEvent('hud:client:UpdateStress', src, newStress)
         TriggerClientEvent('QRCore:Notify', src, Lang:t("info.relaxing"), 'primary')
-	end
+    end
+end)
+
+-- count telegrams for player
+QRCore.Functions.CreateCallback('hud:server:getTelegramsAmount', function(source, cb)
+    local src = source
+    local Player = QRCore.Functions.GetPlayer(src)
+    local result = MySQL.prepare.await('SELECT COUNT(*) FROM telegrams WHERE citizenid = ? AND status = ?', {Player.PlayerData.citizenid, 0})
+    if result > 0 then
+        cb(result)
+    else
+        cb(0)
+    end
 end)
