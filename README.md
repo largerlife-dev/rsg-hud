@@ -2,11 +2,8 @@
 - discord : https://discord.gg/s5uSk56B65
 - github : https://github.com/Rexshack-RedM
 
-# Framework QRCore RedM Edition
-- https://github.com/QRCore-RedM-Re
-
 # Dependancies
-- qr-core
+- rsg-core
 - rsg-telegram
 
 # Installation

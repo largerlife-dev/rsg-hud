@@ -5,7 +5,7 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 description 'rsg-hud'
 
 shared_scripts {
-    '@qr-core/shared/locale.lua',
+    '@rsg-core/shared/locale.lua',
     'locales/en.lua',
     'config.lua'
 }

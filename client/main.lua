@@ -1,4 +1,4 @@
-local QRCore = exports['qr-core']:GetCoreObject()
+local RSGCore = exports['rsg-core']:GetCoreObject()
 local speed = 0.0
 local radarActive = false
 local stress = 0
@@ -35,11 +35,11 @@ end
 
 -- Events
 
-RegisterNetEvent('QRCore:Client:OnPlayerUnload', function()
+RegisterNetEvent('RSGCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
 end)
 
-RegisterNetEvent('QRCore:Client:OnPlayerLoaded', function()
+RegisterNetEvent('RSGCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
 end)
 
@@ -127,35 +127,35 @@ RegisterNetEvent('hud:client:ShowAccounts', function(type, amount)
         SendNUIMessage({
             action = 'show',
             type = 'cash',
-            cash = QRCore.Shared.Round(amount, 2),
+            cash = RSGCore.Shared.Round(amount, 2),
         })
     elseif type == 'bloodmoney' then
         SendNUIMessage({
             action = 'show',
             type = 'bloodmoney',
-            bloodmoney = QRCore.Shared.Round(amount, 2),
+            bloodmoney = RSGCore.Shared.Round(amount, 2),
         })
     elseif type == 'bank' then
         SendNUIMessage({
             action = 'show',
             type = 'bank',
-            bank = QRCore.Shared.Round(amount, 2),
+            bank = RSGCore.Shared.Round(amount, 2),
         })
     end
 end)
 
 RegisterNetEvent('hud:client:OnMoneyChange', function(type, amount, isMinus)
-    QRCore.Functions.GetPlayerData(function(PlayerData)
+    RSGCore.Functions.GetPlayerData(function(PlayerData)
         cashAmount = PlayerData.money['cash']
         bloodmoneyAmount = PlayerData.money['bloodmoney']
         bankAmount = PlayerData.money['bank']
     end)
     SendNUIMessage({
         action = 'update',
-        cash = QRCore.Shared.Round(cashAmount, 2),
-        bloodmoney = QRCore.Shared.Round(bloodmoneyAmount, 2),
-        bank = QRCore.Shared.Round(bankAmount, 2),
-        amount = QRCore.Shared.Round(amount, 2),
+        cash = RSGCore.Shared.Round(cashAmount, 2),
+        bloodmoney = RSGCore.Shared.Round(bloodmoneyAmount, 2),
+        bank = RSGCore.Shared.Round(bankAmount, 2),
+        amount = RSGCore.Shared.Round(amount, 2),
         minus = isMinus,
         type = type,
     })
@@ -165,7 +165,7 @@ end)
 
 CreateThread(function() -- Speeding
     while true do
-        if QRCore ~= nil --[[ and isLoggedIn ]] then
+        if RSGCore ~= nil --[[ and isLoggedIn ]] then
             local ped = PlayerPedId()
             if IsPedInAnyVehicle(ped, false) then
                 speed = GetEntitySpeed(GetVehiclePedIsIn(ped, false)) * 2.237 --mph
@@ -180,7 +180,7 @@ end)
 
 CreateThread(function() -- Shooting
     while true do
-        if QRCore ~= nil --[[ and isLoggedIn ]] then
+        if RSGCore ~= nil --[[ and isLoggedIn ]] then
             if IsPedShooting(PlayerPedId()) then
                 if math.random() < Config.StressChance then
                     TriggerServerEvent('hud:server:GainStress', math.random(1, 3))
@@ -230,7 +230,7 @@ end)
 CreateThread(function()
     while true do
         if LocalPlayer.state['isLoggedIn'] then
-            QRCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
+            RSGCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
                 if amount > 0 then
                     youhavemail = true            
                 else
