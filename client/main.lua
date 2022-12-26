@@ -75,7 +75,7 @@ CreateThread(function()
             SendNUIMessage({
                 action = 'hudtick',
                 show = show,
-                health = GetEntityHealth(player) / 3, -- health in red dead is 300 so dividing by 3 makes it 100 here
+                health = GetEntityHealth(player) / 6, -- health in red dead max health is 600 so dividing by 6 makes it 100 here
                 armor = Citizen.InvokeNative(0x2CE311A7, player),
                 thirst = thirst,
                 hunger = hunger,

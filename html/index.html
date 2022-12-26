@@ -42,6 +42,10 @@
                         <q-icon name="fas fa-microphone" size="19.5px" :style="{color: talkingColor}" />
                     </div>
                     </transition>
+                    <div v-if="showHealth">
+                        <q-circular-progress class="progress" show-value :value="health" size="50px" :thickness="0.22" color="green" track-color="black-9" center-color="gray-10">
+                            <q-icon name="fas fa-heartbeat" size="19px" :style="{color: showHealthColor}" />
+                    </div>
                     <div v-if="showHunger">
                         <q-circular-progress class="progress" show-value :value="hunger" size="50px" :thickness="0.22" color="orange" track-color="black-9" center-color="gray-10">
                             <q-icon name="fas fa-apple-alt" size="19px" :style="{color: showHungerColor}" />
