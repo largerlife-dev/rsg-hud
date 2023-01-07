@@ -4,19 +4,31 @@ local ResetStress = false
 RSGCore.Commands.Add('cash', 'Check Cash Balance', {}, false, function(source, args)
     local Player = RSGCore.Functions.GetPlayer(source)
     local cashamount = Player.PlayerData.money.cash
-    TriggerClientEvent('hud:client:ShowAccounts', source, 'cash', cashamount)
+    if cashamount ~= nil then
+        TriggerClientEvent('hud:client:ShowAccounts', source, 'cash', cashamount)
+    else
+        return
+    end
 end)
 
 RSGCore.Commands.Add('bank', 'Check Bank Balance', {}, false, function(source, args)
     local Player = RSGCore.Functions.GetPlayer(source)
     local bankamount = Player.PlayerData.money.bank
-    TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
+    if bankamount ~= nil then
+        TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
+    else
+        return
+    end
 end)
 
 RSGCore.Commands.Add('bloodmoney', 'Check Bloodmoney Balance', {}, false, function(source, args)
     local Player = RSGCore.Functions.GetPlayer(source)
     local bloodmoneyamount = Player.PlayerData.money.bloodmoney
-    TriggerClientEvent('hud:client:ShowAccounts', source, 'bloodmoney', bloodmoneyamount)
+    if bloodmoneyamount ~= nil then
+        TriggerClientEvent('hud:client:ShowAccounts', source, 'bloodmoney', bloodmoneyamount)
+    else
+        return
+    end
 end)
 
 RegisterNetEvent('hud:server:GainStress', function(amount)
