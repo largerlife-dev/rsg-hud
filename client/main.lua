@@ -127,19 +127,19 @@ RegisterNetEvent('hud:client:ShowAccounts', function(type, amount)
         SendNUIMessage({
             action = 'show',
             type = 'cash',
-            cash = RSGCore.Shared.Round(amount, 2),
+            cash = string.format("%.2f", amount)
         })
     elseif type == 'bloodmoney' then
         SendNUIMessage({
             action = 'show',
             type = 'bloodmoney',
-            bloodmoney = RSGCore.Shared.Round(amount, 2),
+            bloodmoney = string.format("%.2f", amount)
         })
     elseif type == 'bank' then
         SendNUIMessage({
             action = 'show',
             type = 'bank',
-            bank = RSGCore.Shared.Round(amount, 2),
+            bank = string.format("%.2f", amount)
         })
     end
 end)
