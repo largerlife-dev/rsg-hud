@@ -59,6 +59,8 @@ const moneyHud = Vue.createApp({
             this.bank = data.bank;
             this.bloodmoney = data.bloodmoney;
             this.cash = data.cash;
+            this.minus = data.minus;
+            this.plus = data.plus;
             if (data.type === 'cash') {
                 if (data.minus) {
                     this.showCash = true;
