@@ -207,9 +207,19 @@ const playerHud = {
                 this.showStress = true;
             }
             if (data.talking) {
+                this.showVoice = true;
+            } else {
+                this.showVoice = false;
+            }
+            if (data.talking) {
                 this.talkingColor = "#FF0000";
             } else {
                 this.talkingColor = "#FFFFFF";
+            }
+            if (data.youhavemail) {
+                this.showYouHaveMail = true;
+            } else {
+                this.showYouHaveMail = false;
             }
             if (data.youhavemail) {
                 this.showYouHaveMailColor = "#FFD700";
