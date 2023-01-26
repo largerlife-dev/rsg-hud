@@ -214,7 +214,7 @@ const playerHud = {
             if (data.youhavemail) {
                 this.showYouHaveMailColor = "#FFD700";
             } else {
-                this.showYouHaveMailColor = "#FFFFFF";
+                this.showYouHaveMail = false;
             }
         }
     }
