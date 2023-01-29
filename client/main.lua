@@ -9,6 +9,7 @@ local bankAmount = 0
 local isLoggedIn = false
 local youhavemail = false
 local incinematic = false
+local inBathing = false
 
 -- functions
 local function GetShakeIntensity(stresslevel)
@@ -60,7 +61,7 @@ end)
 CreateThread(function()
     while true do
         Wait(500)
-        if LocalPlayer.state['isLoggedIn'] and incinematic == false then
+        if LocalPlayer.state['isLoggedIn'] and incinematic == false and inBathing == false then
             local show = true
             local player = PlayerPedId()
             local playerid = PlayerId()
@@ -247,12 +248,21 @@ CreateThread(function()
     while true do
         if LocalPlayer.state['isLoggedIn'] then
             local cinematic = Citizen.InvokeNative(0xBF7C780731AADBF8, Citizen.ResultAsInteger())
+            local isBathingActive = exports['rsg-bathing']:IsBathingActive()
+
             if cinematic == 1 then
                 incinematic = true
             else
                 incinematic = false
             end
+
+            if isBathingActive then
+                inBathing = true
+            else
+                inBathing = false
+            end
         end
+
         Wait(500)
     end
 end)
