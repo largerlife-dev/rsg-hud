@@ -97,7 +97,7 @@ end)
 CreateThread(function()
     while true do
         Wait(1)
-        local IsBirdPostApproaching = exports['rsg-birdpost']:IsBirdPostApproaching()
+        local IsBirdPostApproaching = exports['rsg-telegram']:IsBirdPostApproaching()
 
         if IsPedOnMount(PlayerPedId()) or IsPedOnVehicle(PlayerPedId()) or IsBirdPostApproaching then
             if Config.MounttMinimap then
