@@ -20,7 +20,7 @@ server_scripts {
     '@oxmysql/lib/MySQL.lua',
 }
 
-dependency 'rsg-birdpost'
+dependency 'rsg-telegram'
 
 ui_page 'html/index.html'
 
