@@ -232,7 +232,7 @@ end)
 -- check telegrams
 CreateThread(function()
     while true do
-        if LocalPlayer.state['isLoggedIn'] then
+        if isLoggedIn == true then
             RSGCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
                 if amount > 0 then
                     youhavemail = true            
