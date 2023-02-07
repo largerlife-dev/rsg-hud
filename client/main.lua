@@ -10,6 +10,12 @@ local isLoggedIn = false
 local youhavemail = false
 local incinematic = false
 local inBathing = false
+local showUI = true
+
+RegisterNetEvent("HideAllUI")
+AddEventHandler("HideAllUI", function()
+    showUI = not showUI
+end)
 
 -- functions
 local function GetShakeIntensity(stresslevel)
@@ -61,7 +67,7 @@ end)
 CreateThread(function()
     while true do
         Wait(500)
-        if LocalPlayer.state['isLoggedIn'] and incinematic == false and inBathing == false then
+        if LocalPlayer.state['isLoggedIn'] and incinematic == false and inBathing == false and showUI then
             local show = true
             local player = PlayerPedId()
             local playerid = PlayerId()
@@ -100,7 +106,7 @@ CreateThread(function()
         local IsBirdPostApproaching = exports['rsg-telegram']:IsBirdPostApproaching()
 
         if IsPedOnMount(PlayerPedId()) or IsPedOnVehicle(PlayerPedId()) or IsBirdPostApproaching then
-            if Config.MounttMinimap then
+            if Config.MounttMinimap and showUI then
                 if Config.MountCompass then
                     SetMinimapType(3)
                 else
@@ -114,7 +120,7 @@ CreateThread(function()
                 SetMinimapType(0)
                 Wait(2000)
             else
-                if Config.OnFootCompass then
+                if Config.OnFootCompass and showUI then
                     SetMinimapType(3)
                 else
                     SetMinimapType(1)
