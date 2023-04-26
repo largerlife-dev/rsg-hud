@@ -102,10 +102,13 @@ end)
 
 CreateThread(function()
     while true do
-        Wait(1)
+        Wait(1000)
+
+        local ped = PlayerPedId()
+        local isMounted = IsPedOnMount(ped) or IsPedInAnyVehicle(ped)
         local IsBirdPostApproaching = exports['rsg-telegram']:IsBirdPostApproaching()
 
-        if IsPedOnMount(PlayerPedId()) or IsPedOnVehicle(PlayerPedId()) or IsBirdPostApproaching then
+        if isMounted or IsBirdPostApproaching then
             if Config.MounttMinimap and showUI then
                 if Config.MountCompass then
                     SetMinimapType(3)
@@ -118,7 +121,6 @@ CreateThread(function()
         else
             if not Config.OnFootMinimap then
                 SetMinimapType(0)
-                Wait(2000)
             else
                 if Config.OnFootCompass and showUI then
                     SetMinimapType(3)
