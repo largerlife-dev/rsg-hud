@@ -119,13 +119,13 @@ CreateThread(function()
                 SetMinimapType(0)
             end
         else
-            if not Config.OnFootMinimap then
-                SetMinimapType(0)
+            if Config.OnFootMinimap and showUI then
+                SetMinimapType(1)
             else
                 if Config.OnFootCompass and showUI then
                     SetMinimapType(3)
                 else
-                    SetMinimapType(1)
+                    SetMinimapType(0)
                 end
             end
         end
