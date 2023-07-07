@@ -43,24 +43,24 @@
                     </div>
                     </transition>
                     <div v-if="showHealth">
-                        <q-circular-progress class="progress" show-value :value="health" size="50px" :thickness="0.22" color="green" track-color="black-9" center-color="gray-10">
-                            <q-icon name="fas fa-heartbeat" size="19px" :style="{color: showHealthColor}" />
+                        <q-circular-progress class="progress" show-value :value="health" size="50px" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
+                        <q-icon name="fas fa-heartbeat" size="19px" :style="{color: showHealthColor}" />
                     </div>
                     <div v-if="showHunger">
-                        <q-circular-progress class="progress" show-value :value="hunger" size="50px" :thickness="0.22" color="orange" track-color="black-9" center-color="gray-10">
-                            <q-icon name="fas fa-apple-alt" size="19px" :style="{color: showHungerColor}" />
+                        <q-circular-progress class="progress" show-value :value="hunger" size="50px" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
+                        <q-icon name="fas fa-apple-alt" size="19px" :style="{color: showHungerColor}" />
                     </div>
                     <div v-if="showThirst">
-                        <q-circular-progress class="progress" show-value :value="thirst" size="50px" :thickness="0.22" color="blue" track-color="black-9" center-color="gray-10">
-                            <q-icon name="fas fa-tint" size="19px" :style="{color: showThirstColor}" />
+                        <q-circular-progress class="progress" show-value :value="thirst" size="50px" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
+                        <q-icon name="fas fa-tint" size="19px" :style="{color: showThirstColor}" />
                     </div>
                     <div v-if="showStress">
-                        <q-circular-progress class="progress" show-value :value="stress" size="50px" :thickness="0.22" color="red" track-color="black-9" center-color="gray-10">
-                            <q-icon name="fas fa-brain" size="19px" color="white" />
+                        <q-circular-progress class="progress" show-value :value="stress" size="50px" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
+                        <q-icon name="fas fa-brain" size="19px" color="white" />
                     </div>
                     <div v-if="showYouHaveMail">
                         <q-circular-progress class="progress" show-value :value="youhavemail" size="50px" :thickness="0.22" color="black" track-color="black-9" center-color="gray-10">
-                            <q-icon name="far fa-envelope" size="19px" :style="{color: showYouHaveMailColor}" />
+                        <q-icon name="far fa-envelope" size="19px" :style="{color: showYouHaveMailColor}" />
                     </div>
                 </div>
             </div>

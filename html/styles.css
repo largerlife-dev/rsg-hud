@@ -72,10 +72,15 @@
 /* Player HUD */
 
 #playerhud {
-    display: inline-block;
-    position: absolute;
-    bottom: 4.0vw;
-    left: 0.9vh;
+  position: absolute;
+  display: flex;
+  flex-flow: row;
+  justify-content: center; /* horizontally center the element */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; /* center the element */
+  width: 100px;
 }
 
 .progress {
