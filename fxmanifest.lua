@@ -2,11 +2,11 @@ fx_version 'cerulean'
 game 'rdr3'
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
 
-author 'RexShack#3041'
 description 'rsg-hud'
-version '1.0.0'
+version '1.0.1'
 
 shared_scripts {
+    '@ox_lib/init.lua',
     '@rsg-core/shared/locale.lua',
     'locales/en.lua',
     'locales/*.lua',
@@ -14,15 +14,19 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/main.lua',
+    'client/client.lua',
 }
 
 server_scripts {
-    'server/main.lua',
+    'server/server.lua',
     '@oxmysql/lib/MySQL.lua',
 }
 
-dependency 'rsg-telegram'
+dependencies {
+    'rsg-core',
+    'ox_lib',
+    'rsg-telegram',
+}
 
 ui_page 'html/index.html'
 
@@ -31,3 +35,5 @@ files {
     'html/styles.css',
     'html/app.js'
 }
+
+lua54 'yes'

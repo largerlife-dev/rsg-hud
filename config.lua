@@ -1,4 +1,5 @@
 Config = {}
+
 Config.StressChance = 0.1 -- Default: 10% -- Percentage Stress Chance When Shooting (0-1)
 Config.MinimumStress = 50 -- Minimum Stress Level For Screen Shaking
 Config.MinimumSpeed = 100 -- Going Over This Speed Will Cause Stress
@@ -6,13 +7,40 @@ Config.MinimumSpeed = 100 -- Going Over This Speed Will Cause Stress
 -- telegrame check settings
 Config.TelegramCheck = 5000 -- amount of milliseconds to check your telegrams
 
---Current setup: no minimap when onfoot
+-- current setup: no minimap when onfoot
 Config.OnFootMinimap = false -- set to true/false to disable/enable minimap when on foot
 Config.OnFootCompass = false -- true = have the minimap set to a compass instead of off or normal minimap
 
---Current setup: Normal minimap when on mount
+-- current setup: Normal minimap when on mount
 Config.MounttMinimap = true -- set to false if you want to disable the minimap when on mount
 Config.MountCompass = false -- set to true if you want to have a compass instead of normal minimap while on a mount
+
+-- turn health damge on/off
+Config.DoHealthDamage = true
+
+-- temp settings (only one setting)
+Config.TempFormat = 'celsius'
+--Config.TempFormat = 'fahrenheit'
+
+-- warmth add while wearing
+Config.WearingHat      = 1
+Config.WearingShirt    = 2
+Config.WearingPants    = 2
+Config.WearingBoots    = 1
+Config.WearingCoat     = 4
+Config.WearingOpenCoat = 3
+Config.WearingGloves   = 1
+Config.WearingVest     = 2
+Config.WearingPoncho   = 2
+Config.WearingSkirt    = 2
+Config.WearingChaps    = 2
+
+-- warmth limit before impacts health
+Config.MinTemp = 0
+Config.MaxTemp = 30
+
+-- amount of health to remove if min/max temp reached
+Config.RemoveHealth = 5
 
 -- Stress
 Config.Intensity = {

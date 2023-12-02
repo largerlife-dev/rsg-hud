@@ -132,6 +132,7 @@ const playerHud = {
             thirst: 0,
             stress: 0,
             voice: 0,
+            temp: 0,
             youhavemail: false,
             show: false,
             talking: false,
@@ -143,6 +144,7 @@ const playerHud = {
             showStress: true,
             showYouHaveMail: true,
             talkingColor: "#FFFFFF",
+            showTemp: true,
         }
     },
     destroyed() {
@@ -164,6 +166,7 @@ const playerHud = {
             this.thirst = data.thirst;
             this.stress = data.stress;
             this.voice = data.voice;
+            this.temp = data.temp;
             this.youhavemail = data.youhavemail;
             this.talking = data.talking;
             if (data.health >= 100) {
@@ -215,6 +218,16 @@ const playerHud = {
                 this.talkingColor = "#FF0000";
             } else {
                 this.talkingColor = "#FFFFFF";
+            }
+            if (data.temp >= 0) {
+                this.showTemp = true;
+            } else {
+                this.showTemp = true;
+            }
+            if (data.temp <= 30) {
+                this.showTempColor = "#FDD021";
+            } else {
+                this.showTempColor = "#CFBCAE";
             }
             if (data.youhavemail) {
                 this.showYouHaveMail = true;
