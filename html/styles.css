@@ -72,69 +72,15 @@
 /* Player HUD */
 
 #playerhud {
-  position: absolute;
-  display: flex;
-  flex-flow: row;
-  justify-content: center; /* horizontally center the element */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; /* center the element */
-  width: 100px;
+    position: fixed;
+    left: 1vh;
+    bottom: 2.5vw;
+    display: internal;
 }
 
 .progress {
     margin-top: 5px!important; 
  }
-
-
-/* Vehicle HUD */
-
-.ui-car-fuel,
-.ui-car-nos {
-    position: absolute;
-}
-
-.ui-car-seatbelt,
-.ui-car-cruise {
-    position: absolute;
-}
-
-.ui-car-speed {
-    position: absolute;
-    bottom: 4vh;
-    left: 16vw;
-}
-
-.ui-car-fuel {
-    left: 18.9vw;
-    bottom: 1.9vw;
-}
-
-.ui-car-nos {
-    left: 16.7vw;
-    bottom: 5.4vw;
-}
-
-.ui-car-seatbelt {
-    left: 19.1vw;
-    bottom: 3.56vw;
-}
-
-.ui-car-cruise {
-    left: 18.3vw;
-    bottom: 8.7vh;
-}
-
-.ui-car-street {
-    font-size: 15px;
-    text-transform: uppercase;
-    position: absolute;
-    bottom: 0vh;
-    left: 16vw;
-    color: #ededed;
-}
-
 
 /* Animation */
 
