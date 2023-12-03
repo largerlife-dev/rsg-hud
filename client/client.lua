@@ -190,7 +190,7 @@ CreateThread(function()
     end
 end)
 
--- health damage if min/max temp reached
+-- health/cleanliness damage
 Citizen.CreateThread(function()
     while true do
         Wait(5000)
@@ -209,6 +209,15 @@ Citizen.CreateThread(function()
             
             -- hot health damage
             if temp > Config.MaxTemp then
+                PlayPain(player, 9, 1, true, true)
+                Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                SetEntityHealth(player, health - Config.RemoveHealth)
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") then -- AnimpostfxIsRunning
+                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
+            end
+
+            -- cleanliness health damage
+            if cleanliness < Config.MinCleanliness then
                 PlayPain(player, 9, 1, true, true)
                 Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
                 SetEntityHealth(player, health - Config.RemoveHealth)

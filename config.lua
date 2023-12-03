@@ -39,6 +39,9 @@ Config.WearingChaps    = 2
 Config.MinTemp = 0
 Config.MaxTemp = 30
 
+-- cleanliness limit before impacts health
+Config.MinCleanliness = 30
+
 -- amount of health to remove if min/max temp reached
 Config.RemoveHealth = 5
 
