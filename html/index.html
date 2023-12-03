@@ -61,6 +61,10 @@
                         <q-circular-progress class="progress" show-value :value="thirst" size="3.75vh" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
                         <q-icon name="fas fa-tint" size="19px" :style="{color: showThirstColor}" />
                     </div>
+                    <div v-if="showCleanliness">
+                        <q-circular-progress class="progress" show-value :value="cleanliness" size="3.75vh" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
+                        <q-icon name="fas fa-bath" size="19px" :style="{color: showCleanlinessColor}" />
+                    </div>
                     <div v-if="showStress">
                         <q-circular-progress class="progress" show-value :value="stress" size="3.75vh" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
                         <q-icon name="fas fa-brain" size="19px" color="white" />

@@ -130,6 +130,7 @@ const playerHud = {
             armor: 0,
             hunger: 0,
             thirst: 0,
+            cleanliness: 0,
             stress: 0,
             voice: 0,
             temp: 0,
@@ -141,6 +142,7 @@ const playerHud = {
             showArmor: true,
             showHunger: true,
             showThirst: true,
+            showCleanliness: true,
             showStress: true,
             showYouHaveMail: true,
             talkingColor: "#FFFFFF",
@@ -164,6 +166,7 @@ const playerHud = {
             this.armor = data.armor;
             this.hunger = data.hunger;
             this.thirst = data.thirst;
+            this.cleanliness = data.cleanliness;
             this.stress = data.stress;
             this.voice = data.voice;
             this.temp = data.temp;
@@ -189,6 +192,11 @@ const playerHud = {
             } else {
                 this.showThirstColor = "#FFF";
             }
+            if (data.cleanliness <= 30 ) {
+                this.showCleanlinessColor = "#FF0000";
+            } else {
+                this.showCleanlinessColor = "#FFF";
+            }
             if (data.armor <= 0) {
                 this.showArmor = false;
             } else {
@@ -203,6 +211,11 @@ const playerHud = {
                 this.showThirst = false;
             } else {
                 this.showThirst = true;
+            }
+            if (data.cleanliness >= 100) {
+                this.showCleanliness = false;
+            } else {
+                this.showCleanliness = true;
             }
             if (data.stress <= 0) {
                 this.showStress = false;

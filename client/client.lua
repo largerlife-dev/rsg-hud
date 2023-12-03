@@ -53,9 +53,10 @@ RegisterNetEvent('RSGCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
 end)
 
-RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst)
+RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst, newCleanliness)
     hunger = newHunger
     thirst = newThirst
+    cleanliness = newCleanliness
 end)
 
 RegisterNetEvent('hud:client:UpdateThirst', function(newThirst)
@@ -93,6 +94,7 @@ CreateThread(function()
                 armor = Citizen.InvokeNative(0x2CE311A7, player),
                 thirst = thirst,
                 hunger = hunger,
+                cleanliness = cleanliness,
                 stress = stress,
                 talking = talking,
                 temp = temperature,
@@ -195,7 +197,7 @@ Citizen.CreateThread(function()
         if isLoggedIn and Config.DoHealthDamage then
             player = PlayerPedId()
             health = GetEntityHealth(player)
-            
+
             -- cold health damage
             if temp < Config.MinTemp then 
                 SetEntityHealth(player, health - Config.RemoveHealth)
