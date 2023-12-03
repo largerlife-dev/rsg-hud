@@ -18,6 +18,9 @@ Config.MountCompass = false -- set to true if you want to have a compass instead
 -- turn health damge on/off
 Config.DoHealthDamage = true
 
+-- turn screen effect on/off
+Config.DoHealthDamageFx = false
+
 -- temp settings (only one setting)
 Config.TempFormat = 'celsius'
 --Config.TempFormat = 'fahrenheit'

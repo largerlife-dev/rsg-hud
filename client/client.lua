@@ -200,28 +200,34 @@ Citizen.CreateThread(function()
 
             -- cold health damage
             if temp < Config.MinTemp then 
-                SetEntityHealth(player, health - Config.RemoveHealth)
                 PlayPain(player, 9, 1, true, true)
-                Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
-            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") then -- AnimpostfxIsRunning
+                SetEntityHealth(player, health - Config.RemoveHealth)
+                if Config.DoHealthDamageFx then
+                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                end
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then -- AnimpostfxIsRunning
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
             end
             
             -- hot health damage
             if temp > Config.MaxTemp then
                 PlayPain(player, 9, 1, true, true)
-                Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
                 SetEntityHealth(player, health - Config.RemoveHealth)
-            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") then -- AnimpostfxIsRunning
+                if Config.DoHealthDamageFx then
+                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                end
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then -- AnimpostfxIsRunning
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
             end
 
             -- cleanliness health damage
             if cleanliness < Config.MinCleanliness then
                 PlayPain(player, 9, 1, true, true)
-                Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
                 SetEntityHealth(player, health - Config.RemoveHealth)
-            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") then -- AnimpostfxIsRunning
+                if Config.DoHealthDamageFx then
+                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                end
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then -- AnimpostfxIsRunning
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
             end
 
