@@ -90,7 +90,7 @@ CreateThread(function()
 
             -- horse health & stamina
             local horsehealth = 0 
-            local horsestam = 0 
+            local horsestamina = 0 
 
             if mounted then
                 local horse = GetMount(player)
