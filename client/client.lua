@@ -77,7 +77,7 @@ CreateThread(function()
             local playerid = PlayerId()
             local coords = GetEntityCoords(player)
             local stamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x0FF421E467373FCF, PlayerId(), Citizen.ResultAsFloat())))
-
+            local mounted = IsPedOnMount(player)
             if IsPauseMenuActive() then
                 show = false
             end
@@ -86,6 +86,18 @@ CreateThread(function()
             local talking = Citizen.InvokeNative(0x33EEF97F, playerid)
             if LocalPlayer.state['proximity'] then
                 voice = LocalPlayer.state['proximity'].distance
+            end
+
+            -- horse health & stamina
+            local horsehealth = 0 
+            local horsestam = 0 
+
+            if mounted then
+                local horse = GetMount(player)
+                local maxHealth = Citizen.InvokeNative(0x4700A416E8324EF3, horse, Citizen.ResultAsInteger())
+                local maxStamina = Citizen.InvokeNative(0xCB42AFE2B613EE55, horse, Citizen.ResultAsFloat())
+                horsehealth = tonumber(string.format("%.2f", Citizen.InvokeNative(0x82368787EA73C0F7, horse) / maxHealth * 100))
+                horsestamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x775A1CA7893AA8B5, horse, Citizen.ResultAsFloat()) / maxStamina * 100))
             end
 
             SendNUIMessage({
@@ -100,6 +112,9 @@ CreateThread(function()
                 stress = stress,
                 talking = talking,
                 temp = temperature,
+                onHorse = mounted,
+                horsehealth = horsehealth,
+                horsestamina = horsestamina,
                 voice = voice,
                 youhavemail = youhavemail,
             })
