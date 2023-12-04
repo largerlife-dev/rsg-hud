@@ -76,6 +76,7 @@ CreateThread(function()
             local player = PlayerPedId()
             local playerid = PlayerId()
             local coords = GetEntityCoords(player)
+            local stamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x0FF421E467373FCF, PlayerId(), Citizen.ResultAsFloat())))
 
             if IsPauseMenuActive() then
                 show = false
@@ -91,6 +92,7 @@ CreateThread(function()
                 action = 'hudtick',
                 show = show,
                 health = GetEntityHealth(player) / 6, -- health in red dead max health is 600 so dividing by 6 makes it 100 here
+                stamina = stamina,
                 armor = Citizen.InvokeNative(0x2CE311A7, player),
                 thirst = thirst,
                 hunger = hunger,

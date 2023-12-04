@@ -53,6 +53,10 @@
                         <q-circular-progress class="progress" show-value :value="health" size="3.75vh" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
                         <q-icon name="fas fa-heartbeat" size="19px" :style="{color: showHealthColor}" />
                     </div>
+                    <div v-if="showStamina">
+                        <q-circular-progress class="progress" show-value :value="stamina" size="3.75vh" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
+                        <q-icon name="fas fa-bolt" size="19px" :style="{color: showStaminaColor}" />
+                    </div>
                     <div v-if="showHunger">
                         <q-circular-progress class="progress" show-value :value="hunger" size="3.75vh" :thickness="0.22" color="white" track-color="black-9" center-color="gray-10">
                         <q-icon name="fas fa-apple-alt" size="19px" :style="{color: showHungerColor}" />
