@@ -88,14 +88,21 @@ CreateThread(function()
                 voice = LocalPlayer.state['proximity'].distance
             end
 
-            -- horse health & stamina
+            -- horse health, stamina & cleanliness
             local horsehealth = 0 
             local horsestamina = 0 
+            local horseclean = 0
 
             if mounted then
                 local horse = GetMount(player)
                 local maxHealth = Citizen.InvokeNative(0x4700A416E8324EF3, horse, Citizen.ResultAsInteger())
                 local maxStamina = Citizen.InvokeNative(0xCB42AFE2B613EE55, horse, Citizen.ResultAsFloat())
+                local horseCleanliness = Citizen.InvokeNative(0x147149F2E909323C, horse, 16, Citizen.ResultAsInteger())
+                if horseCleanliness == 0 then
+                    horseclean = 100
+                else
+                    horseclean = 100 - horseCleanliness
+                end
                 horsehealth = tonumber(string.format("%.2f", Citizen.InvokeNative(0x82368787EA73C0F7, horse) / maxHealth * 100))
                 horsestamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x775A1CA7893AA8B5, horse, Citizen.ResultAsFloat()) / maxStamina * 100))
             end
@@ -115,6 +122,7 @@ CreateThread(function()
                 onHorse = mounted,
                 horsehealth = horsehealth,
                 horsestamina = horsestamina,
+                horseclean = horseclean,
                 voice = voice,
                 youhavemail = youhavemail,
             })
