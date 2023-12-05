@@ -54,9 +54,11 @@ RegisterNetEvent('RSGCore:Client:OnPlayerLoaded', function()
 end)
 
 RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst, newCleanliness)
+    local player = PlayerPedId()
+    local cleanstats = Citizen.InvokeNative(0x147149F2E909323C, player, 16, Citizen.ResultAsInteger())
     hunger = newHunger
     thirst = newThirst
-    cleanliness = newCleanliness
+    cleanliness = newCleanliness - cleanstats
 end)
 
 RegisterNetEvent('hud:client:UpdateThirst', function(newThirst)
