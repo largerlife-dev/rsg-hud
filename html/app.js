@@ -139,6 +139,7 @@ const playerHud = {
             horsestamina: 0,
             horseclean: 0,
             youhavemail: false,
+            pvp: true,
             show: false,
             talking: false,
             showVoice: true,
@@ -156,6 +157,7 @@ const playerHud = {
             showHorseHealthColor: "#a16600",
             showHorseCleanColor: "#a16600",
             showYouHaveMail: true,
+            showPVP: true,
             talkingColor: "#FFFFFF",
             showTemp: true,
         }
@@ -183,6 +185,7 @@ const playerHud = {
             this.voice = data.voice;
             this.temp = data.temp;
             this.youhavemail = data.youhavemail;
+            this.pvp = data.pvp;
             this.talking = data.talking;
             this.showHorseStamina = data.onHorse;
             this.showHorseHealth = data.onHorse;
@@ -281,6 +284,16 @@ const playerHud = {
                 this.showYouHaveMailColor = "#FFD700";
             } else {
                 this.showYouHaveMailColor = "#FFFFFF";
+            }
+            if (data.pvp) {
+                this.showPVP = true;
+            } else {
+                this.showPVP = true;
+            }
+            if (data.pvp) {
+                this.showPVPColor = "#FF0000";
+            } else {
+                this.showPVPColor = "#00FF00";
             }
         }
     }
