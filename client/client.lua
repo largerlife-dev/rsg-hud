@@ -14,6 +14,7 @@ local showUI = true
 local temperature = 0
 local temp = 0
 local tempadd = 0
+local clean = 0
 
 RegisterNetEvent("HideAllUI")
 AddEventHandler("HideAllUI", function()
@@ -41,6 +42,55 @@ local function GetEffectInterval(stresslevel)
         end
     end
     return retval
+end
+
+-- flies when not clean (Config.MinCleanliness)
+local FliesSpawn = function (clean)
+    local new_ptfx_dictionary = "core"
+    local new_ptfx_name = "env_flies"
+    local is_particle_effect_active = false
+    local current_ptfx_dictionary = new_ptfx_dictionary
+    local current_ptfx_name = new_ptfx_name
+    local current_ptfx_handle_id = false
+    local bone_index = 464   -- ["CP_Chest"]  = {bone_index = 464, bone_id = 53684},
+    local ptfx_offcet_x = 0.0
+    local ptfx_offcet_y = 0.0
+    local ptfx_offcet_z = 0.0
+    local ptfx_rot_x = -90.0
+    local ptfx_rot_y = 0.0
+    local ptfx_rot_z = 0.0
+    local ptfx_scale = 1.0
+    local ptfx_axis_x = 0
+    local ptfx_axis_y = 0
+    local ptfx_axis_z = 0
+    local clean = clean
+    if not is_particle_effect_active and clean <= Config.MinCleanliness then
+        current_ptfx_dictionary = new_ptfx_dictionary
+        current_ptfx_name = new_ptfx_name
+        if not Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) then -- HasNamedPtfxAssetLoaded
+            Citizen.InvokeNative(0xF2B2353BBC0D4E8F, joaat(current_ptfx_dictionary))  -- RequestNamedPtfxAsset
+            local counter = 0
+            while not Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) and counter <= 300 do  -- while not HasNamedPtfxAssetLoaded
+                Citizen.Wait(0)
+            end
+        end
+        if not filesspawned and Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) then  -- HasNamedPtfxAssetLoaded
+            Citizen.InvokeNative(0xA10DB07FC234DD12, current_ptfx_dictionary) -- UseParticleFxAsset
+
+            current_ptfx_handle_id = Citizen.InvokeNative(0x9C56621462FFE7A6,current_ptfx_name,PlayerPedId(),ptfx_offcet_x,ptfx_offcet_y,ptfx_offcet_z,ptfx_rot_x,ptfx_rot_y,ptfx_rot_z,bone_index,ptfx_scale,ptfx_axis_x,ptfx_axis_y,ptfx_axis_z) -- StartNetworkedParticleFxLoopedOnEntityBone
+            is_particle_effect_active = true
+        else
+            print("cant load ptfx dictionary!")
+        end
+    else
+        if current_ptfx_handle_id then
+            if Citizen.InvokeNative(0x9DD5AFF561E88F2A, current_ptfx_handle_id) then   -- DoesParticleFxLoopedExist
+                Citizen.InvokeNative(0x459598F579C98929, current_ptfx_handle_id, false)   -- RemoveParticleFx
+            end
+        end
+        current_ptfx_handle_id = false
+        is_particle_effect_active = false
+    end
 end
 
 -- Events
@@ -144,6 +194,11 @@ CreateThread(function()
                 show = false,
             })
         end
+
+        if cleanliness ~= nil then
+            FliesSpawn(cleanliness)
+        end
+        
     end
 end)
 
