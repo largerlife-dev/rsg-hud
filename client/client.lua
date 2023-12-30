@@ -313,7 +313,7 @@ Citizen.CreateThread(function()
             end
 
             -- cleanliness health damage
-            if cleanliness < Config.MinCleanliness then
+            if cleanliness ~= nil and cleanliness < Config.MinCleanliness then
                 PlayPain(player, 9, 1, true, true)
                 SetEntityHealth(player, health - Config.RemoveHealth)
                 if Config.DoHealthDamageFx then
