@@ -16,12 +16,17 @@ local temp = 0
 local tempadd = 0
 local clean = 0
 
+------------------------------------------------
+-- hide ui
+------------------------------------------------
 RegisterNetEvent("HideAllUI")
 AddEventHandler("HideAllUI", function()
     showUI = not showUI
 end)
 
+------------------------------------------------
 -- functions
+------------------------------------------------
 local function GetShakeIntensity(stresslevel)
     local retval = 0.05
     for _, v in pairs(Config.Intensity['shake']) do
@@ -44,7 +49,9 @@ local function GetEffectInterval(stresslevel)
     return retval
 end
 
+------------------------------------------------
 -- flies when not clean (Config.MinCleanliness)
+------------------------------------------------
 local FliesSpawn = function (clean)
     local new_ptfx_dictionary = "core"
     local new_ptfx_name = "env_flies"
@@ -93,8 +100,9 @@ local FliesSpawn = function (clean)
     end
 end
 
--- Events
-
+------------------------------------------------
+-- events
+------------------------------------------------
 RegisterNetEvent('RSGCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
 end)
@@ -119,7 +127,9 @@ RegisterNetEvent('hud:client:UpdateStress', function(newStress)
     stress = newStress
 end)
 
--- Player HUD
+------------------------------------------------
+-- player hud
+------------------------------------------------
 CreateThread(function()
     while true do
         Wait(500)
@@ -202,6 +212,9 @@ CreateThread(function()
     end
 end)
 
+------------------------------------------------
+-- show minimap setup
+------------------------------------------------
 CreateThread(function()
     while true do
         Wait(1000)
@@ -234,7 +247,9 @@ CreateThread(function()
     end
 end)
 
+------------------------------------------------
 -- work out temperature
+------------------------------------------------
 CreateThread(function()
     while true do
         Wait(1000)
@@ -282,7 +297,9 @@ CreateThread(function()
     end
 end)
 
+------------------------------------------------
 -- health/cleanliness damage
+------------------------------------------------
 Citizen.CreateThread(function()
     while true do
         Wait(5000)
@@ -292,42 +309,50 @@ Citizen.CreateThread(function()
 
             -- cold health damage
             if temp < Config.MinTemp then 
-                PlayPain(player, 9, 1, true, true)
-                SetEntityHealth(player, health - Config.RemoveHealth)
                 if Config.DoHealthDamageFx then
-                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
-            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then -- AnimpostfxIsRunning
-                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
+                if Config.DoHealthPainSound then
+                    PlayPain(player, 9, 1, true, true)
+                end
+                SetEntityHealth(player, health - Config.RemoveHealth)
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
+                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
             
             -- hot health damage
             if temp > Config.MaxTemp then
-                PlayPain(player, 9, 1, true, true)
-                SetEntityHealth(player, health - Config.RemoveHealth)
                 if Config.DoHealthDamageFx then
-                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
-            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then -- AnimpostfxIsRunning
-                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
+                if Config.DoHealthPainSound then
+                    PlayPain(player, 9, 1, true, true)
+                end
+                SetEntityHealth(player, health - Config.RemoveHealth)
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
+                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
 
             -- cleanliness health damage
             if cleanliness ~= nil and cleanliness < Config.MinCleanliness then
-                PlayPain(player, 9, 1, true, true)
-                SetEntityHealth(player, health - Config.RemoveHealth)
                 if Config.DoHealthDamageFx then
-                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true) -- AnimpostfxPlay
+                    Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
-            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then -- AnimpostfxIsRunning
-                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed") -- AnimpostfxStop
+                if Config.DoHealthPainSound then
+                    PlayPain(player, 9, 1, true, true)
+                end
+                SetEntityHealth(player, health - Config.RemoveHealth)
+            elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
+                Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
 
         end
     end
 end)
 
--- Money HUD
+------------------------------------------------
+-- money hud
+------------------------------------------------
 RegisterNetEvent('hud:client:ShowAccounts', function(type, amount)
     if type == 'cash' then
         SendNUIMessage({
@@ -350,6 +375,9 @@ RegisterNetEvent('hud:client:ShowAccounts', function(type, amount)
     end
 end)
 
+------------------------------------------------
+-- on money change
+------------------------------------------------
 RegisterNetEvent('hud:client:OnMoneyChange', function(type, amount, isMinus)
     RSGCore.Functions.GetPlayerData(function(PlayerData)
         cashAmount = PlayerData.money['cash']
@@ -367,8 +395,9 @@ RegisterNetEvent('hud:client:OnMoneyChange', function(type, amount, isMinus)
     })
 end)
 
--- Stress Gain
-
+------------------------------------------------
+-- stress gain when speeding
+------------------------------------------------
 CreateThread(function() -- Speeding
     while true do
         if RSGCore ~= nil --[[ and isLoggedIn ]] then
@@ -384,7 +413,10 @@ CreateThread(function() -- Speeding
     end
 end)
 
-CreateThread(function() -- Shooting
+------------------------------------------------
+-- stress gained while shooting
+------------------------------------------------
+CreateThread(function()
     while true do
         if RSGCore ~= nil --[[ and isLoggedIn ]] then
             if IsPedShooting(PlayerPedId()) then
@@ -397,7 +429,9 @@ CreateThread(function() -- Shooting
     end
 end)
 
--- Stress Screen Effects
+------------------------------------------------
+-- stress screen effects
+------------------------------------------------
 CreateThread(function()
     while true do
         local ped = PlayerPedId()
@@ -430,7 +464,9 @@ CreateThread(function()
     end
 end)
 
+------------------------------------------------
 -- check telegrams
+------------------------------------------------
 CreateThread(function()
     while true do
         if isLoggedIn == true then
@@ -446,7 +482,9 @@ CreateThread(function()
     end
 end)
 
+------------------------------------------------
 -- check cinematic and hide hud
+------------------------------------------------
 CreateThread(function()
     while true do
         if LocalPlayer.state['isLoggedIn'] then
