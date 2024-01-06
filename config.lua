@@ -29,21 +29,21 @@ Config.TempFormat = 'celsius'
 --Config.TempFormat = 'fahrenheit'
 
 -- warmth add while wearing
-Config.WearingHat      = 1
-Config.WearingShirt    = 2
-Config.WearingPants    = 2
-Config.WearingBoots    = 1
-Config.WearingCoat     = 4
-Config.WearingOpenCoat = 3
-Config.WearingGloves   = 1
-Config.WearingVest     = 2
-Config.WearingPoncho   = 2
-Config.WearingSkirt    = 2
-Config.WearingChaps    = 2
+Config.WearingHat      = 0
+Config.WearingShirt    = 0
+Config.WearingPants    = 0
+Config.WearingBoots    = 0
+Config.WearingCoat     = 15
+Config.WearingOpenCoat = 15
+Config.WearingGloves   = 0
+Config.WearingVest     = 0
+Config.WearingPoncho   = 0
+Config.WearingSkirt    = 0
+Config.WearingChaps    = 0
 
 -- warmth limit before impacts health
-Config.MinTemp = 0
-Config.MaxTemp = 30
+Config.MinTemp = -5
+Config.MaxTemp = 40
 
 -- cleanliness limit before impacts health
 Config.MinCleanliness = 30
