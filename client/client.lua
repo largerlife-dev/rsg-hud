@@ -205,7 +205,7 @@ CreateThread(function()
             })
         end
 
-        if cleanliness ~= nil then
+        if cleanliness ~= nil and Config.FlyEffect then
             FliesSpawn(cleanliness)
         end
         

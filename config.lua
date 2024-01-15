@@ -46,6 +46,7 @@ Config.MinTemp = -5
 Config.MaxTemp = 40
 
 -- cleanliness limit before impacts health
+Config.FlyEffect = false -- toggle flies on/off
 Config.MinCleanliness = 30
 
 -- amount of health to remove if min/max temp reached
