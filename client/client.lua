@@ -10,6 +10,7 @@ local isLoggedIn = false
 local youhavemail = false
 local incinematic = false
 local inBathing = false
+local inClothing = false
 local showUI = true
 local temperature = 0
 local temp = 0
@@ -133,7 +134,7 @@ end)
 CreateThread(function()
     while true do
         Wait(500)
-        if LocalPlayer.state['isLoggedIn'] and incinematic == false and inBathing == false and showUI then
+        if LocalPlayer.state['isLoggedIn'] and incinematic == false and inBathing == false and inClothing == false and showUI then
             local show = true
             local player = PlayerPedId()
             local playerid = PlayerId()
@@ -490,18 +491,27 @@ CreateThread(function()
         if LocalPlayer.state['isLoggedIn'] then
             local cinematic = Citizen.InvokeNative(0xBF7C780731AADBF8, Citizen.ResultAsInteger())
             local isBathingActive = exports['rsg-bathing']:IsBathingActive()
+            local IsCothingActive = exports['rsg-clothes']:IsCothingActive()
 
+            -- cinematic check
             if cinematic == 1 then
                 incinematic = true
             else
                 incinematic = false
             end
-
+            -- bathing check
             if isBathingActive then
                 inBathing = true
             else
                 inBathing = false
             end
+            -- clothing check
+            if IsCothingActive then
+                inClothing = true
+            else
+                inClothing = false
+            end
+
         end
 
         Wait(500)
