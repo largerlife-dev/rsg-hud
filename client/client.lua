@@ -491,7 +491,7 @@ CreateThread(function()
         if LocalPlayer.state['isLoggedIn'] then
             local cinematic = Citizen.InvokeNative(0xBF7C780731AADBF8, Citizen.ResultAsInteger())
             local isBathingActive = exports['rsg-bathing']:IsBathingActive()
-            local IsCothingActive = exports['rsg-clothes']:IsCothingActive()
+            local IsCothingActive = exports['rsg-appearance']:IsCothingActive()
 
             -- cinematic check
             if cinematic == 1 then
