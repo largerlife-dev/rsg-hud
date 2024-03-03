@@ -1,34 +1,63 @@
 Config = {}
 
+----------------------------------
+-- stress settings
+----------------------------------
 Config.StressChance = 0.1 -- Default: 10% -- Percentage Stress Chance When Shooting (0-1)
 Config.MinimumStress = 50 -- Minimum Stress Level For Screen Shaking
 Config.MinimumSpeed = 100 -- Going Over This Speed Will Cause Stress
 
+----------------------------------
+-- hud player display settings
+----------------------------------
+Config.HidePlayerHealthNative  = true
+Config.HidePlayerStaminaNative = true
+Config.HidePlayerDeadEyeNative = true
+
+----------------------------------
+-- hud horse display settings
+----------------------------------
+Config.HideHorseHealthNative  = true
+Config.HideHorseStaminaNative = true
+Config.HideHorseCourageNative = true
+
+----------------------------------
 -- telegrame check settings
+----------------------------------
 Config.TelegramCheck = 5000 -- amount of milliseconds to check your telegrams
 
--- current setup: no minimap when onfoot
+----------------------------------
+-- minimap / compass settings
+----------------------------------
 Config.OnFootMinimap = false -- set to true/false to disable/enable minimap when on foot
 Config.OnFootCompass = false -- true = have the minimap set to a compass instead of off or normal minimap
+Config.MounttMinimap = true  -- set to false if you want to disable the minimap when on mount
+Config.MountCompass  = false -- set to true if you want to have a compass instead of normal minimap while on a mount
 
--- current setup: Normal minimap when on mount
-Config.MounttMinimap = true -- set to false if you want to disable the minimap when on mount
-Config.MountCompass = false -- set to true if you want to have a compass instead of normal minimap while on a mount
-
+----------------------------------
 -- turn health damage on/off
+----------------------------------
 Config.DoHealthDamage = true
 
+----------------------------------
 -- turn screen effect on/off
+----------------------------------
 Config.DoHealthDamageFx = false
 
+----------------------------------
 -- turn health damage sound on/off
+----------------------------------
 Config.DoHealthPainSound = true
 
+----------------------------------
 -- temp settings (only one setting)
+----------------------------------
 Config.TempFormat = 'celsius'
 --Config.TempFormat = 'fahrenheit'
 
+----------------------------------
 -- warmth add while wearing
+----------------------------------
 Config.WearingHat      = 0
 Config.WearingShirt    = 0
 Config.WearingPants    = 0
@@ -41,18 +70,26 @@ Config.WearingPoncho   = 0
 Config.WearingSkirt    = 0
 Config.WearingChaps    = 0
 
+----------------------------------
 -- warmth limit before impacts health
+----------------------------------
 Config.MinTemp = -5
 Config.MaxTemp = 40
 
+----------------------------------
 -- cleanliness limit before impacts health
+----------------------------------
 Config.FlyEffect = false -- toggle flies on/off
 Config.MinCleanliness = 30
 
+----------------------------------
 -- amount of health to remove if min/max temp reached
+----------------------------------
 Config.RemoveHealth = 5
 
--- Stress
+----------------------------------
+-- stress settings
+----------------------------------
 Config.Intensity = {
     ["shake"] = {
         [1] = {
