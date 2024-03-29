@@ -255,9 +255,10 @@ end)
 ------------------------------------------------
 CreateThread(function()
     while true do
-        Wait(1000)
+        Wait(500)
 
         local ped = PlayerPedId()
+        local interiorId = GetInteriorFromEntity(ped)
         local isMounted = IsPedOnMount(ped) or IsPedInAnyVehicle(ped)
         local IsBirdPostApproaching = exports['rsg-telegram']:IsBirdPostApproaching()
 
@@ -274,6 +275,14 @@ CreateThread(function()
         else
             if Config.OnFootMinimap and showUI then
                 SetMinimapType(1)
+                -- interior zoom
+                if interiorId ~= 0 then
+                    -- ped entered an interior
+                    SetRadarConfigType(0xDF5DB58C, 0) -- zoom in the map by 10x
+                else
+                    -- ped left an interior
+                    SetRadarConfigType(0x25B517BF, 0) -- zoom in the map by 0x (return the minimap back to normal)
+                end
             else
                 if Config.OnFootCompass and showUI then
                     SetMinimapType(3)
