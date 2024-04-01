@@ -141,17 +141,9 @@ end
 ------------------------------------------------
 -- events
 ------------------------------------------------
-RegisterNetEvent('RSGCore:Client:OnPlayerUnload', function()
-    isLoggedIn = false
-end)
-
-RegisterNetEvent('RSGCore:Client:OnPlayerLoaded', function()
-    isLoggedIn = true
-end)
 
 RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst, newCleanliness)
-    local player = PlayerPedId()
-    local cleanstats = Citizen.InvokeNative(0x147149F2E909323C, player, 16, Citizen.ResultAsInteger())
+    local cleanstats = Citizen.InvokeNative(0x147149F2E909323C, cache.ped, 16, Citizen.ResultAsInteger())
     hunger = newHunger
     thirst = newThirst
     cleanliness = newCleanliness - cleanstats
@@ -171,19 +163,16 @@ end)
 CreateThread(function()
     while true do
         Wait(500)
-        if LocalPlayer.state['isLoggedIn'] and incinematic == false and inBathing == false and inClothing == false and showUI then
+        if LocalPlayer.state.isLoggedIn and incinematic == false and inBathing == false and inClothing == false and showUI then
             local show = true
-            local player = PlayerPedId()
-            local playerid = PlayerId()
-            local coords = GetEntityCoords(player)
-            local stamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x0FF421E467373FCF, PlayerId(), Citizen.ResultAsFloat())))
-            local mounted = IsPedOnMount(player)
+            local stamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x0FF421E467373FCF, cache.playerId, Citizen.ResultAsFloat())))
+            local mounted = IsPedOnMount(cache.ped)
             if IsPauseMenuActive() then
                 show = false
             end
 
             local voice = 0
-            local talking = Citizen.InvokeNative(0x33EEF97F, playerid)
+            local talking = Citizen.InvokeNative(0x33EEF97F, cache.playerId)
             if LocalPlayer.state['proximity'] then
                 voice = LocalPlayer.state['proximity'].distance
             end
@@ -194,7 +183,7 @@ CreateThread(function()
             local horseclean = 0
 
             if mounted then
-                local horse = GetMount(player)
+                local horse = GetMount(cache.ped)
                 local maxHealth = Citizen.InvokeNative(0x4700A416E8324EF3, horse, Citizen.ResultAsInteger())
                 local maxStamina = Citizen.InvokeNative(0xCB42AFE2B613EE55, horse, Citizen.ResultAsFloat())
                 local horseCleanliness = Citizen.InvokeNative(0x147149F2E909323C, horse, 16, Citizen.ResultAsInteger())
@@ -219,9 +208,9 @@ CreateThread(function()
             SendNUIMessage({
                 action = 'hudtick',
                 show = show,
-                health = GetEntityHealth(player) / 6, -- health in red dead max health is 600 so dividing by 6 makes it 100 here
+                health = GetEntityHealth(cache.ped) / 6, -- health in red dead max health is 600 so dividing by 6 makes it 100 here
                 stamina = stamina,
-                armor = Citizen.InvokeNative(0x2CE311A7, player),
+                armor = Citizen.InvokeNative(0x2CE311A7, cache.ped),
                 thirst = thirst,
                 hunger = hunger,
                 cleanliness = cleanliness,
@@ -253,13 +242,13 @@ end)
 ------------------------------------------------
 -- show minimap setup
 ------------------------------------------------
+
+local test = true
 CreateThread(function()
     while true do
         Wait(500)
-
-        local ped = PlayerPedId()
-        local interiorId = GetInteriorFromEntity(ped)
-        local isMounted = IsPedOnMount(ped) or IsPedInAnyVehicle(ped)
+        local interiorId = GetInteriorFromEntity(cache.ped)
+        local isMounted = IsPedOnMount(cache.ped) or IsPedInAnyVehicle(cache.ped)
         local IsBirdPostApproaching = exports['rsg-telegram']:IsBirdPostApproaching()
 
         if isMounted or IsBirdPostApproaching then
@@ -301,21 +290,21 @@ CreateThread(function()
     while true do
         Wait(1000)
 
-        local player = PlayerPedId()
-        local coords = GetEntityCoords(player)
+       
+        local coords = GetEntityCoords(cache.ped)
 
         -- wearing
-        local hat      = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x9925C067) -- hat
-        local shirt    = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x2026C46D) -- shirt
-        local pants    = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x1D4C528A) -- pants
-        local boots    = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x777EC6EF) -- boots
-        local coat     = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0xE06D30CE) -- coat
-        local opencoat = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x662AC34) -- open-coat
-        local gloves   = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0xEABE0032) -- gloves
-        local vest     = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x485EE834) -- vest
-        local poncho   = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0xAF14310B) -- poncho
-        local skirts   = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0xA0E3AB7F) -- skirts
-        local chaps    = Citizen.InvokeNative(0xFB4891BD7578CDC1, player, 0x3107499B) -- chaps
+        local hat      = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x9925C067) -- hat
+        local shirt    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x2026C46D) -- shirt
+        local pants    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x1D4C528A) -- pants
+        local boots    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x777EC6EF) -- boots
+        local coat     = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xE06D30CE) -- coat
+        local opencoat = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x662AC34) -- open-coat
+        local gloves   = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xEABE0032) -- gloves
+        local vest     = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x485EE834) -- vest
+        local poncho   = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xAF14310B) -- poncho
+        local skirts   = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xA0E3AB7F) -- skirts
+        local chaps    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x3107499B) -- chaps
         
         -- get temp add
         if hat      == 1 then what      = Config.WearingHat      else what      = 0 end
@@ -347,12 +336,11 @@ end)
 ------------------------------------------------
 -- health/cleanliness damage
 ------------------------------------------------
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
         Wait(5000)
-        if isLoggedIn and Config.DoHealthDamage then
-            player = PlayerPedId()
-            health = GetEntityHealth(player)
+        if LocalPlayer.state.isLoggedIn and Config.DoHealthDamage then
+            health = GetEntityHealth(cache.ped)
 
             -- cold health damage
             if temp < Config.MinTemp then 
@@ -360,9 +348,9 @@ Citizen.CreateThread(function()
                     Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
                 if Config.DoHealthPainSound then
-                    PlayPain(player, 9, 1, true, true)
+                    PlayPain(cache.ped, 9, 1, true, true)
                 end
-                SetEntityHealth(player, health - Config.RemoveHealth)
+                SetEntityHealth(cache.ped, health - Config.RemoveHealth)
             elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
@@ -373,9 +361,9 @@ Citizen.CreateThread(function()
                     Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
                 if Config.DoHealthPainSound then
-                    PlayPain(player, 9, 1, true, true)
+                    PlayPain(cache.ped, 9, 1, true, true)
                 end
-                SetEntityHealth(player, health - Config.RemoveHealth)
+                SetEntityHealth(cache.ped, health - Config.RemoveHealth)
             elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
@@ -386,9 +374,9 @@ Citizen.CreateThread(function()
                     Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
                 if Config.DoHealthPainSound then
-                    PlayPain(player, 9, 1, true, true)
+                    PlayPain(cache.ped, 9, 1, true, true)
                 end
-                SetEntityHealth(player, health - Config.RemoveHealth)
+                SetEntityHealth(cache.ped, health - Config.RemoveHealth)
             elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
@@ -427,9 +415,9 @@ end)
 ------------------------------------------------
 RegisterNetEvent('hud:client:OnMoneyChange', function(type, amount, isMinus)
     RSGCore.Functions.GetPlayerData(function(PlayerData)
-        cashAmount = PlayerData.money['cash']
-        bloodmoneyAmount = PlayerData.money['bloodmoney']
-        bankAmount = PlayerData.money['bank']
+        cashAmount = PlayerData.money.cash
+        bloodmoneyAmount = PlayerData.money.bloodmoney
+        bankAmount = PlayerData.money.bank
     end)
     SendNUIMessage({
         action = 'update',
@@ -447,10 +435,9 @@ end)
 ------------------------------------------------
 CreateThread(function() -- Speeding
     while true do
-        if RSGCore ~= nil --[[ and isLoggedIn ]] then
-            local ped = PlayerPedId()
-            if IsPedInAnyVehicle(ped, false) then
-                speed = GetEntitySpeed(GetVehiclePedIsIn(ped, false)) * 2.237 --mph
+        if RSGCore ~= nil then
+            if IsPedInAnyVehicle(cache.ped, false) then
+                speed = GetEntitySpeed(GetVehiclePedIsIn(cache.ped, false)) * 2.237 --mph
                 if speed >= Config.MinimumSpeed then
                     TriggerServerEvent('hud:server:GainStress', math.random(1, 3))
                 end
@@ -465,8 +452,8 @@ end)
 ------------------------------------------------
 CreateThread(function()
     while true do
-        if RSGCore ~= nil --[[ and isLoggedIn ]] then
-            if IsPedShooting(PlayerPedId()) then
+        if RSGCore ~= nil  then
+            if IsPedShooting(cache.ped) then
                 if math.random() < Config.StressChance then
                     TriggerServerEvent('hud:server:GainStress', math.random(1, 3))
                 end
@@ -481,7 +468,7 @@ end)
 ------------------------------------------------
 CreateThread(function()
     while true do
-        local ped = PlayerPedId()
+     
         local sleep = GetEffectInterval(stress)
 
         if stress >= 100 then
@@ -490,9 +477,9 @@ CreateThread(function()
             local RagdollTimeout = (FallRepeat * 1750)
             ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', ShakeIntensity)
 
-            if not IsPedRagdoll(ped) and IsPedOnFoot(ped) and not IsPedSwimming(ped) then
-                local player = PlayerPedId()
-                SetPedToRagdollWithFall(player, RagdollTimeout, RagdollTimeout, 1, GetEntityForwardVector(player), 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            if not IsPedRagdoll(cache.ped) and IsPedOnFoot(cache.ped) and not IsPedSwimming(cache.ped) then
+              
+                SetPedToRagdollWithFall(cache.ped, RagdollTimeout, RagdollTimeout, 1, GetEntityForwardVector(cache.ped), 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
             end
 
             Wait(500)
@@ -516,7 +503,7 @@ end)
 ------------------------------------------------
 CreateThread(function()
     while true do
-        if isLoggedIn == true then
+        if LocalPlayer.state.isLoggedIn then
             RSGCore.Functions.TriggerCallback('hud:server:getTelegramsAmount', function(amount)
                 if amount > 0 then
                     youhavemail = true
@@ -534,7 +521,7 @@ end)
 ------------------------------------------------
 CreateThread(function()
     while true do
-        if LocalPlayer.state['isLoggedIn'] then
+        if LocalPlayer.state.isLoggedIn then
             local cinematic = Citizen.InvokeNative(0xBF7C780731AADBF8, Citizen.ResultAsInteger())
             local isBathingActive = exports['rsg-bathing']:IsBathingActive()
             local IsCothingActive = exports['rsg-appearance']:IsCothingActive()
