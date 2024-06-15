@@ -42,16 +42,6 @@ RSGCore.Commands.Add('cash', 'Check Cash Balance', {}, false, function(source, a
     end
 end)
 
-RSGCore.Commands.Add('bank', 'Check Bank Balance', {}, false, function(source, args)
-    local Player = RSGCore.Functions.GetPlayer(source)
-    local bankamount = Player.PlayerData.money.bank
-    if bankamount ~= nil then
-        TriggerClientEvent('hud:client:ShowAccounts', source, 'bank', bankamount)
-    else
-        return
-    end
-end)
-
 RSGCore.Commands.Add('bloodmoney', 'Check Bloodmoney Balance', {}, false, function(source, args)
     local Player = RSGCore.Functions.GetPlayer(source)
     local bloodmoneyamount = Player.PlayerData.money.bloodmoney
