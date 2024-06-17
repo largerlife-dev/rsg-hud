@@ -115,7 +115,6 @@ RegisterNetEvent('hud:server:RelieveStress', function(amount)
         end
         Player.Functions.SetMetaData('stress', newStress)
         TriggerClientEvent('hud:client:UpdateStress', src, newStress)
-        TriggerClientEvent('ox_lib:notify', src, {title = Lang:t("info.relaxing"), type = 'inform', duration = 5000 })
     end
 end)
 
