@@ -205,6 +205,9 @@ CreateThread(function()
                 pvp = false
             end
 
+            -- outlaw status
+            local outlawstatus = RSGCore.Functions.GetPlayerData().metadata['outlawstatus']
+
             SendNUIMessage({
                 action = 'hudtick',
                 show = show,
@@ -224,6 +227,7 @@ CreateThread(function()
                 voice = voice,
                 youhavemail = youhavemail,
                 pvp = pvp,
+                outlawstatus = outlawstatus,
             })
         else
             SendNUIMessage({

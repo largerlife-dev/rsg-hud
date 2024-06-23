@@ -140,6 +140,7 @@ const playerHud = {
             horseclean: 0,
             youhavemail: false,
             pvp: true,
+            outlawstatus: true,
             show: false,
             talking: false,
             showVoice: true,
@@ -186,6 +187,7 @@ const playerHud = {
             this.temp = data.temp;
             this.youhavemail = data.youhavemail;
             this.pvp = data.pvp;
+            this.outlawstatus = data.outlawstatus;
             this.talking = data.talking;
             this.showHorseStamina = data.onHorse;
             this.showHorseHealth = data.onHorse;
@@ -294,6 +296,16 @@ const playerHud = {
                 this.showPVPColor = "#FF0000";
             } else {
                 this.showPVPColor = "#00FF00";
+            }
+            if (data.outlawstatus >= 100) {
+                this.showoutlawstatus = true;
+            } else {
+                this.showoutlawstatus = false;
+            }
+            if (data.outlawstatus) {
+                this.showOutLawColor = "#FF0000";
+            } else {
+                this.showOutLawColor = "#00FF00";
             }
         }
     }
