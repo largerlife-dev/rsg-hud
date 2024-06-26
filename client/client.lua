@@ -158,6 +158,18 @@ RegisterNetEvent('hud:client:UpdateStress', function(newStress)
 end)
 
 ------------------------------------------------
+-- get outlawstatus
+------------------------------------------------
+CreateThread(function()
+    while true do
+        Wait(10000)
+        RSGCore.Functions.TriggerCallback('hud:server:getoutlawstatus', function(result)
+            outlawstatus = result[1].outlawstatus
+        end)
+    end
+end)
+
+------------------------------------------------
 -- player hud
 ------------------------------------------------
 CreateThread(function()
@@ -204,9 +216,6 @@ CreateThread(function()
             else
                 pvp = false
             end
-
-            -- outlaw status
-            local outlawstatus = RSGCore.Functions.GetPlayerData().metadata['outlawstatus']
 
             SendNUIMessage({
                 action = 'hudtick',
