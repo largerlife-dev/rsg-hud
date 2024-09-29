@@ -42,10 +42,6 @@
                         <q-icon name="fas fa-microphone" size="19.5px" :style="{color: talkingColor}" />
                     </div>
                     </transition>
-                    <div v-if="showPVP">
-                        <q-circular-progress class="progress" show-value :value="pvp" size="3.75vh" :thickness="0.22" color="black" track-color="black-9" center-color="gray-10">
-                        <q-icon name="fas fa-crosshairs" size="19px" :style="{color: showPVPColor}" />
-                    </div>
                     <div v-if="showoutlawstatus">
                         <q-circular-progress class="progress" show-value :value="showoutlawstatus" size="3.75vh" :thickness="0.22" color="black" track-color="black-9" center-color="gray-10">
                         <q-icon name="fas fa-mask" size="19px" :style="{color: showOutLawColor}" />

@@ -208,15 +208,6 @@ CreateThread(function()
                 horsestamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x775A1CA7893AA8B5, horse, Citizen.ResultAsFloat()) / maxStamina * 100))
             end
 
-            -- pvp status
-            local pvpstatus = GetRelationshipBetweenGroups(`PLAYER`, `PLAYER`)
-            
-            if pvpstatus == 5 then
-                pvp = true
-            else
-                pvp = false
-            end
-
             SendNUIMessage({
                 action = 'hudtick',
                 show = show,
@@ -235,7 +226,6 @@ CreateThread(function()
                 horseclean = horseclean,
                 voice = voice,
                 youhavemail = youhavemail,
-                pvp = pvp,
                 outlawstatus = outlawstatus,
             })
         else
