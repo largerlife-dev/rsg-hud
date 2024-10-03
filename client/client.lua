@@ -149,6 +149,10 @@ RegisterNetEvent('hud:client:UpdateNeeds', function(newHunger, newThirst, newCle
     cleanliness = newCleanliness - cleanstats
 end)
 
+RegisterNetEvent('hud:client:UpdateHunger', function(newHunger)
+    hunger = newHunger
+end)
+
 RegisterNetEvent('hud:client:UpdateThirst', function(newThirst)
     thirst = newThirst
 end)
