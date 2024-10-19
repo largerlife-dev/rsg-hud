@@ -3,6 +3,7 @@ Config = {}
 ----------------------------------
 -- stress settings
 ----------------------------------
+Config.EnableStressSystem = false
 Config.StressChance = 0.0 -- Default: 10% -- Percentage Stress Chance When Shooting (0-1)
 Config.MinimumStress = 100 -- Minimum Stress Level For Screen Shaking
 Config.MinimumSpeed = 100 -- Going Over This Speed Will Cause Stress
@@ -110,12 +111,12 @@ Config.Intensity = {
         [4] = {
             min = 80,
             max = 90,
-            intensity = 0.12,
+            intensity = 0.0,
         },
         [5] = {
             min = 90,
             max = 100,
-            intensity = 0.18,
+            intensity = 0.0,
         },
     }
 }

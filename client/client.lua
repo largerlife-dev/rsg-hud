@@ -29,7 +29,6 @@ end)
 -- hud display settings
 ------------------------------------------------
 Citizen.CreateThread(function()
-
     if Config.HidePlayerHealthNative then
         Citizen.InvokeNative(0xC116E6DF68DCE667, 4, 2) -- ICON_HEALTH / HIDE
         Citizen.InvokeNative(0xC116E6DF68DCE667, 5, 2) -- ICON_HEALTH_CORE / HIDE
@@ -59,7 +58,6 @@ Citizen.CreateThread(function()
         Citizen.InvokeNative(0xC116E6DF68DCE667, 10, 2) -- ICON_HORSE_COURAGE / HIDE
         Citizen.InvokeNative(0xC116E6DF68DCE667, 11, 2) -- ICON_HORSE_COURAGE_CORE / HIDE
     end
-
 end)
 
 ------------------------------------------------
@@ -90,14 +88,14 @@ end
 ------------------------------------------------
 -- flies when not clean (Config.MinCleanliness)
 ------------------------------------------------
-local FliesSpawn = function (clean)
+local FliesSpawn = function(clean)
     local new_ptfx_dictionary = "core"
     local new_ptfx_name = "env_flies"
     local is_particle_effect_active = false
     local current_ptfx_dictionary = new_ptfx_dictionary
     local current_ptfx_name = new_ptfx_name
     local current_ptfx_handle_id = false
-    local bone_index = 464   -- ["CP_Chest"]  = {bone_index = 464, bone_id = 53684},
+    local bone_index = 464 -- ["CP_Chest"]  = {bone_index = 464, bone_id = 53684},
     local ptfx_offcet_x = 0.0
     local ptfx_offcet_y = 0.0
     local ptfx_offcet_z = 0.0
@@ -112,25 +110,27 @@ local FliesSpawn = function (clean)
     if not is_particle_effect_active and clean <= Config.MinCleanliness then
         current_ptfx_dictionary = new_ptfx_dictionary
         current_ptfx_name = new_ptfx_name
-        if not Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) then -- HasNamedPtfxAssetLoaded
-            Citizen.InvokeNative(0xF2B2353BBC0D4E8F, joaat(current_ptfx_dictionary))  -- RequestNamedPtfxAsset
+        if not Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) then                         -- HasNamedPtfxAssetLoaded
+            Citizen.InvokeNative(0xF2B2353BBC0D4E8F, joaat(current_ptfx_dictionary))                                 -- RequestNamedPtfxAsset
             local counter = 0
-            while not Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) and counter <= 300 do  -- while not HasNamedPtfxAssetLoaded
+            while not Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) and counter <= 300 do -- while not HasNamedPtfxAssetLoaded
                 Citizen.Wait(0)
             end
         end
-        if not filesspawned and Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) then  -- HasNamedPtfxAssetLoaded
-            Citizen.InvokeNative(0xA10DB07FC234DD12, current_ptfx_dictionary) -- UseParticleFxAsset
+        if not filesspawned and Citizen.InvokeNative(0x65BB72F29138F5D6, joaat(current_ptfx_dictionary)) then                                                                                                                                      -- HasNamedPtfxAssetLoaded
+            Citizen.InvokeNative(0xA10DB07FC234DD12, current_ptfx_dictionary)                                                                                                                                                                      -- UseParticleFxAsset
 
-            current_ptfx_handle_id = Citizen.InvokeNative(0x9C56621462FFE7A6,current_ptfx_name,PlayerPedId(),ptfx_offcet_x,ptfx_offcet_y,ptfx_offcet_z,ptfx_rot_x,ptfx_rot_y,ptfx_rot_z,bone_index,ptfx_scale,ptfx_axis_x,ptfx_axis_y,ptfx_axis_z) -- StartNetworkedParticleFxLoopedOnEntityBone
+            current_ptfx_handle_id = Citizen.InvokeNative(0x9C56621462FFE7A6, current_ptfx_name, PlayerPedId(),
+                ptfx_offcet_x, ptfx_offcet_y, ptfx_offcet_z, ptfx_rot_x, ptfx_rot_y, ptfx_rot_z, bone_index, ptfx_scale,
+                ptfx_axis_x, ptfx_axis_y, ptfx_axis_z)                                                                                                                                                                                             -- StartNetworkedParticleFxLoopedOnEntityBone
             is_particle_effect_active = true
         else
             print("cant load ptfx dictionary!")
         end
     else
         if current_ptfx_handle_id then
-            if Citizen.InvokeNative(0x9DD5AFF561E88F2A, current_ptfx_handle_id) then   -- DoesParticleFxLoopedExist
-                Citizen.InvokeNative(0x459598F579C98929, current_ptfx_handle_id, false)   -- RemoveParticleFx
+            if Citizen.InvokeNative(0x9DD5AFF561E88F2A, current_ptfx_handle_id) then    -- DoesParticleFxLoopedExist
+                Citizen.InvokeNative(0x459598F579C98929, current_ptfx_handle_id, false) -- RemoveParticleFx
             end
         end
         current_ptfx_handle_id = false
@@ -158,7 +158,9 @@ RegisterNetEvent('hud:client:UpdateThirst', function(newThirst)
 end)
 
 RegisterNetEvent('hud:client:UpdateStress', function(newStress)
-    stress = newStress
+    if Config.EnableStressSystem then
+        stress = newStress
+    end
 end)
 
 ------------------------------------------------
@@ -181,7 +183,8 @@ CreateThread(function()
         Wait(500)
         if LocalPlayer.state.isLoggedIn and incinematic == false and inBathing == false and inClothing == false and showUI then
             local show = true
-            local stamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x0FF421E467373FCF, cache.playerId, Citizen.ResultAsFloat())))
+            local stamina = tonumber(string.format("%.2f",
+                Citizen.InvokeNative(0x0FF421E467373FCF, cache.playerId, Citizen.ResultAsFloat())))
             local mounted = IsPedOnMount(cache.ped)
             if IsPauseMenuActive() then
                 show = false
@@ -194,8 +197,8 @@ CreateThread(function()
             end
 
             -- horse health, stamina & cleanliness
-            local horsehealth = 0 
-            local horsestamina = 0 
+            local horsehealth = 0
+            local horsestamina = 0
             local horseclean = 0
 
             if mounted then
@@ -208,8 +211,10 @@ CreateThread(function()
                 else
                     horseclean = 100 - horseCleanliness
                 end
-                horsehealth = tonumber(string.format("%.2f", Citizen.InvokeNative(0x82368787EA73C0F7, horse) / maxHealth * 100))
-                horsestamina = tonumber(string.format("%.2f", Citizen.InvokeNative(0x775A1CA7893AA8B5, horse, Citizen.ResultAsFloat()) / maxStamina * 100))
+                horsehealth = tonumber(string.format("%.2f",
+                    Citizen.InvokeNative(0x82368787EA73C0F7, horse) / maxHealth * 100))
+                horsestamina = tonumber(string.format("%.2f",
+                    Citizen.InvokeNative(0x775A1CA7893AA8B5, horse, Citizen.ResultAsFloat()) / maxStamina * 100))
             end
 
             SendNUIMessage({
@@ -242,7 +247,6 @@ CreateThread(function()
         if cleanliness ~= nil and Config.FlyEffect then
             FliesSpawn(cleanliness)
         end
-        
     end
 end)
 
@@ -297,8 +301,8 @@ CreateThread(function()
     while true do
         Wait(1000)
 
-       
-        local coords = GetEntityCoords(cache.ped)
+
+        local coords   = GetEntityCoords(cache.ped)
 
         -- wearing
         local hat      = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x9925C067) -- hat
@@ -306,37 +310,37 @@ CreateThread(function()
         local pants    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x1D4C528A) -- pants
         local boots    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x777EC6EF) -- boots
         local coat     = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xE06D30CE) -- coat
-        local opencoat = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x662AC34) -- open-coat
+        local opencoat = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x662AC34)  -- open-coat
         local gloves   = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xEABE0032) -- gloves
         local vest     = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x485EE834) -- vest
         local poncho   = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xAF14310B) -- poncho
         local skirts   = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0xA0E3AB7F) -- skirts
         local chaps    = Citizen.InvokeNative(0xFB4891BD7578CDC1, cache.ped, 0x3107499B) -- chaps
-        
+
         -- get temp add
-        if hat      == 1 then what      = Config.WearingHat      else what      = 0 end
-        if shirt    == 1 then wshirt    = Config.WearingShirt    else wshirt    = 0 end
-        if pants    == 1 then wpants    = Config.WearingPants    else wpants    = 0 end
-        if boots    == 1 then wboots    = Config.WearingBoots    else wboots    = 0 end
-        if coat     == 1 then wcoat     = Config.WearingCoat     else wcoat     = 0 end
+        if hat == 1 then what = Config.WearingHat else what = 0 end
+        if shirt == 1 then wshirt = Config.WearingShirt else wshirt = 0 end
+        if pants == 1 then wpants = Config.WearingPants else wpants = 0 end
+        if boots == 1 then wboots = Config.WearingBoots else wboots = 0 end
+        if coat == 1 then wcoat = Config.WearingCoat else wcoat = 0 end
         if opencoat == 1 then wopencoat = Config.WearingOpenCoat else wopencoat = 0 end
-        if gloves   == 1 then wgloves   = Config.WearingGloves   else wgloves   = 0 end
-        if vest     == 1 then wvest     = Config.WearingVest     else wvest     = 0 end
-        if poncho   == 1 then wponcho   = Config.WearingPoncho   else wponcho   = 0 end
-        if skirts   == 1 then wskirts   = Config.WearingSkirt    else wskirts   = 0 end
-        if chaps    == 1 then wchaps    = Config.WearingChaps    else wchaps    = 0 end
-        
+        if gloves == 1 then wgloves = Config.WearingGloves else wgloves = 0 end
+        if vest == 1 then wvest = Config.WearingVest else wvest = 0 end
+        if poncho == 1 then wponcho = Config.WearingPoncho else wponcho = 0 end
+        if skirts == 1 then wskirts = Config.WearingSkirt else wskirts = 0 end
+        if chaps == 1 then wchaps = Config.WearingChaps else wchaps = 0 end
+
         local tempadd = (what + wshirt + wpants + wboots + wcoat + wopencoat + wgloves + wvest + wponcho + wskirts + wchaps)
-        
+
         if Config.TempFormat == 'celsius' then
             temperature = math.floor(GetTemperatureAtCoords(coords)) + tempadd .. "°C" --Uncomment for celcius
             temp = math.floor(GetTemperatureAtCoords(coords)) + tempadd
         end
         if Config.TempFormat == 'fahrenheit' then
-            temperature = math.floor(GetTemperatureAtCoords(coords) * 9/5 + 32) + tempadd .. "°F" --Comment out for celcius
-            temp = math.floor(GetTemperatureAtCoords(coords) * 9/5 + 32) + tempadd
+            temperature = math.floor(GetTemperatureAtCoords(coords) * 9 / 5 + 32) + tempadd ..
+            "°F"                                                                                  --Comment out for celcius
+            temp = math.floor(GetTemperatureAtCoords(coords) * 9 / 5 + 32) + tempadd
         end
-   
     end
 end)
 
@@ -350,7 +354,7 @@ CreateThread(function()
             health = GetEntityHealth(cache.ped)
 
             -- cold health damage
-            if temp < Config.MinTemp then 
+            if temp < Config.MinTemp then
                 if Config.DoHealthDamageFx then
                     Citizen.InvokeNative(0x4102732DF6B4005F, "MP_Downed", 0, true)
                 end
@@ -361,7 +365,7 @@ CreateThread(function()
             elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
-            
+
             -- hot health damage
             if temp > Config.MaxTemp then
                 if Config.DoHealthDamageFx then
@@ -387,7 +391,6 @@ CreateThread(function()
             elseif Citizen.InvokeNative(0x4A123E85D7C4CA0B, "MP_Downed") and Config.DoHealthDamageFx then
                 Citizen.InvokeNative(0xB4FD7446BAB2F394, "MP_Downed")
             end
-
         end
     end
 end)
@@ -445,7 +448,7 @@ CreateThread(function() -- Speeding
         if RSGCore ~= nil then
             if IsPedInAnyVehicle(cache.ped, false) then
                 speed = GetEntitySpeed(GetVehiclePedIsIn(cache.ped, false)) * 2.237 --mph
-                if speed >= Config.MinimumSpeed then
+                if Config.EnableStressSystem and speed >= Config.MinimumSpeed then
                     TriggerServerEvent('hud:server:GainStress', math.random(1, 3))
                 end
             end
@@ -458,8 +461,8 @@ end)
 -- stress gained while shooting
 ------------------------------------------------
 CreateThread(function()
-    while true do
-        if RSGCore ~= nil  then
+    while Config.EnableStressSystem do
+        if RSGCore ~= nil then
             if IsPedShooting(cache.ped) then
                 if math.random() < Config.StressChance then
                     TriggerServerEvent('hud:server:GainStress', math.random(1, 3))
@@ -474,8 +477,7 @@ end)
 -- stress screen effects
 ------------------------------------------------
 CreateThread(function()
-    while true do
-     
+    while Config.EnableStressSystem do
         local sleep = GetEffectInterval(stress)
 
         if stress >= 100 then
@@ -485,8 +487,8 @@ CreateThread(function()
             ShakeGameplayCam('SMALL_EXPLOSION_SHAKE', ShakeIntensity)
 
             if not IsPedRagdoll(cache.ped) and IsPedOnFoot(cache.ped) and not IsPedSwimming(cache.ped) then
-              
-                SetPedToRagdollWithFall(cache.ped, RagdollTimeout, RagdollTimeout, 1, GetEntityForwardVector(cache.ped), 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+                SetPedToRagdollWithFall(cache.ped, RagdollTimeout, RagdollTimeout, 1, GetEntityForwardVector(cache.ped),
+                    1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
             end
 
             Wait(500)
@@ -551,7 +553,6 @@ CreateThread(function()
             else
                 inClothing = false
             end
-
         end
 
         Wait(500)
